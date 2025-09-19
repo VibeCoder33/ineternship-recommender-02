@@ -649,6 +649,424 @@ export function InternshipDashboard() {
 //   return (
 //     <div className="flex w-full min-h-screen font-sans">
 //       {/* Left Panel: Form */}
+//       <div className="hidden lg:block lg:w-1/3 xl:w-1/4 p-8 border-r border-border sticky top-0 h-screen overflow-y-auto bg-white">
+//         <div className="flex justify-between items-center mb-8">
+//           <h1 className="text-xl font-bold">{t.title}</h1>
+//           <Select
+//             value={language}
+//             onValueChange={(value: "en" | "hi") => setLanguage(value)}
+//           >
+//             <SelectTrigger className="w-32">
+//               <Languages className="w-4 h-4 mr-2" />
+//               <SelectValue />
+//             </SelectTrigger>
+//             <SelectContent>
+//               {languages.map((lang) => (
+//                 <SelectItem key={lang.code} value={lang.code}>
+//                   {lang.name}
+//                 </SelectItem>
+//               ))}
+//             </SelectContent>
+//           </Select>
+//         </div>
+
+//         <h2 className="text-lg font-semibold mb-4">{t.profileForm}</h2>
+//         <form onSubmit={handleSubmit} className="space-y-6">
+//           <div className="space-y-2">
+//             <Label htmlFor="skills">
+//               <Briefcase className="w-4 h-4 inline mr-2" />
+//               {t.skills}
+//             </Label>
+//             <Input
+//               id="skills"
+//               placeholder={t.skillsPlaceholder}
+//               value={profile.skills}
+//               onChange={(e) =>
+//                 setProfile({ ...profile, skills: e.target.value })
+//               }
+//               required
+//             />
+//           </div>
+//           <div className="space-y-2">
+//             <Label htmlFor="qualifications">
+//               <FileText className="w-4 h-4 inline mr-2" />
+//               {t.qualifications}
+//             </Label>
+//             <Textarea
+//               id="qualifications"
+//               placeholder={t.qualificationsPlaceholder}
+//               value={profile.qualifications}
+//               onChange={(e) =>
+//                 setProfile({ ...profile, qualifications: e.target.value })
+//               }
+//               required
+//             />
+//           </div>
+//           <div className="space-y-2">
+//             <Label htmlFor="locations">
+//               <Map className="w-4 h-4 inline mr-2" />
+//               {t.locations}
+//             </Label>
+//             <Input
+//               id="locations"
+//               placeholder={t.locationsPlaceholder}
+//               value={profile.locations}
+//               onChange={(e) =>
+//                 setProfile({ ...profile, locations: e.target.value })
+//               }
+//               required
+//             />
+//           </div>
+//           <div className="space-y-2">
+//             <Label htmlFor="sectors">
+//               <Building className="w-4 h-4 inline mr-2" />
+//               {t.sectors}
+//             </Label>
+//             <Input
+//               id="sectors"
+//               placeholder={t.sectorsPlaceholder}
+//               value={profile.sectors}
+//               onChange={(e) =>
+//                 setProfile({ ...profile, sectors: e.target.value })
+//               }
+//               required
+//             />
+//           </div>
+//           <Button type="submit" className="w-full" disabled={loading}>
+//             <Search className="w-4 h-4 mr-2" />
+//             {t.findInternships}
+//           </Button>
+//         </form>
+//       </div>
+
+//       {/* Right Panel: Results */}
+//       <div className="w-full lg:w-2/3 xl:w-3/4 p-8 overflow-y-auto h-screen relative">
+//         <div className="geometric-background">
+//           <div className="shape shape-1"></div>
+//           <div className="shape shape-2"></div>
+//           <div className="shape-outline shape-3"></div>
+//           <div className="shape shape-4"></div>
+//           <div className="shape-outline shape-5"></div>
+//           <div className="shape shape-6"></div>
+//           <div className="shape-outline shape-7"></div>
+//           <div className="shape shape-8"></div>
+//         </div>
+//         <AnimatePresence mode="wait">
+//           {loading ? (
+//             <motion.div
+//               key="loader"
+//               initial={{ opacity: 0 }}
+//               animate={{ opacity: 1 }}
+//               exit={{ opacity: 0 }}
+//             >
+//               <LoadingIndicator loadingText={t.loading} />
+//             </motion.div>
+//           ) : !submitted ? (
+//             <motion.div
+//               key="welcome"
+//               initial={{ opacity: 0 }}
+//               animate={{ opacity: 1 }}
+//               exit={{ opacity: 0 }}
+//             >
+//               <WelcomeMessage
+//                 title={t.welcomeTitle}
+//                 message={t.welcomeMessage}
+//               />
+//             </motion.div>
+//           ) : (
+//             <motion.div key="results">
+//               <h2 className="text-2xl font-bold mb-6">{t.recommendations}</h2>
+//               <div className="space-y-4">
+//                 <AnimatePresence>
+//                   {internships.length > 0 ? (
+//                     internships.map((internship, index) => (
+//                       <motion.div
+//                         key={internship.id}
+//                         initial={{ opacity: 0, y: 20 }}
+//                         animate={{ opacity: 1, y: 0 }}
+//                         exit={{ opacity: 0, y: -20 }}
+//                         transition={{ duration: 0.3, delay: index * 0.1 }}
+//                       >
+//                         <Card className="hover:shadow-lg transition-shadow duration-300">
+//                           <CardContent className="p-6">
+//                             <div className="flex justify-between items-start">
+//                               <div>
+//                                 <h3 className="text-lg font-semibold text-primary">
+//                                   {internship.title}
+//                                 </h3>
+//                                 <p className="text-sm text-muted-foreground">
+//                                   {internship.company}
+//                                 </p>
+//                               </div>
+//                               <Badge variant="outline" className="text-sm">
+//                                 {internship.score}% {t.matchScore}
+//                               </Badge>
+//                             </div>
+//                             <div className="flex items-center gap-4 text-sm text-muted-foreground my-3">
+//                               <span className="flex items-center gap-1.5">
+//                                 <MapPin className="w-4 h-4" />{" "}
+//                                 {internship.location}
+//                               </span>
+//                               <span className="flex items-center gap-1.5">
+//                                 <Briefcase className="w-4 h-4" />{" "}
+//                                 {internship.sector}
+//                               </span>
+//                             </div>
+//                             <p className="text-sm text-foreground/80 italic">
+//                               "{internship.reason}"
+//                             </p>
+//                           </CardContent>
+//                         </Card>
+//                       </motion.div>
+//                     ))
+//                   ) : (
+//                     <p className="text-center text-muted-foreground">
+//                       {t.noResults}
+//                     </p>
+//                   )}
+//                 </AnimatePresence>
+//               </div>
+//             </motion.div>
+//           )}
+//         </AnimatePresence>
+//       </div>
+//     </div>
+//   );
+// }
+
+// import React, { useState, useEffect } from "react";
+// import {
+//   Search,
+//   MapPin,
+//   Briefcase,
+//   Languages,
+//   ChevronRight,
+//   Building,
+//   FileText,
+//   Map,
+//   Star,
+// } from "lucide-react";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import { Textarea } from "@/components/ui/textarea";
+// import { Card, CardContent } from "@/components/ui/card";
+// import { Badge } from "@/components/ui/badge";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
+// import { useToast } from "@/hooks/use-toast";
+// import { AnimatePresence, motion } from "framer-motion";
+
+// // --- Interfaces and Mock Data ---
+// interface StudentProfile {
+//   skills: string;
+//   qualifications: string;
+//   locations: string;
+//   sectors: string;
+// }
+
+// interface Internship {
+//   id: string;
+//   title: string;
+//   company: string;
+//   location: string;
+//   score: number;
+//   reason: string;
+//   sector: string;
+// }
+
+// interface Language {
+//   code: "en" | "hi";
+//   name: string;
+// }
+
+// const languages: Language[] = [
+//   { code: "en", name: "English" },
+//   { code: "hi", name: "हिंदी" },
+// ];
+
+// const translations = {
+//   en: {
+//     title: "Internship Recommender",
+//     subtitle: "AI-Powered Opportunity Matching",
+//     profileForm: "Your Profile",
+//     skills: "Your Skills",
+//     skillsPlaceholder: "e.g., Python, React, Marketing...",
+//     qualifications: "Your Qualifications",
+//     qualificationsPlaceholder: "e.g., B.Tech in CS, MBA...",
+//     locations: "Preferred Locations",
+//     locationsPlaceholder: "e.g., Delhi, Mumbai, Remote...",
+//     sectors: "Interested Sectors",
+//     sectorsPlaceholder: "e.g., Technology, Healthcare...",
+//     findInternships: "Find My Internships",
+//     recommendations: "Your Recommended Internships",
+//     matchScore: "Match Score",
+//     reason: "Why it’s a good match:",
+//     loading: "Analyzing your profile...",
+//     noResults: "No internships found. Try adjusting your profile details.",
+//     welcomeTitle: "Unlock Your Career Potential",
+//     welcomeMessage:
+//       "Fill in your profile on the left to discover personalized internship opportunities tailored just for you.",
+//   },
+//   hi: {
+//     title: "इंटर्नशिप सिफारिशकर्ता",
+//     subtitle: "AI-पावर्ड अवसर मिलान",
+//     profileForm: "आपकी प्रोफ़ाइल",
+//     skills: "आपके कौशल",
+//     skillsPlaceholder: "उदा., Python, React, मार्केटिंग...",
+//     qualifications: "आपकी योग्यताएं",
+//     qualificationsPlaceholder: "उदा., B.Tech in CS, MBA...",
+//     locations: "पसंदीदा स्थान",
+//     locationsPlaceholder: "उदा., दिल्ली, मुंबई, रिमोट...",
+//     sectors: "इच्छुक क्षेत्र",
+//     sectorsPlaceholder: "उदा., प्रौद्योगिकी, स्वास्थ्य सेवा...",
+//     findInternships: "मेरी इंटर्नशिप खोजें",
+//     recommendations: "आपके लिए अनुशंसित इंटर्नशिप",
+//     matchScore: "मिलान स्कोर",
+//     reason: "यह एक अच्छा मेल क्यों है:",
+//     loading: "आपकी प्रोफ़ाइल का विश्लेषण किया जा रहा है...",
+//     noResults:
+//       "कोई इंटर्नशिप नहीं मिली। अपनी प्रोफ़ाइल विवरण समायोजित करने का प्रयास करें।",
+//     welcomeTitle: "अपनी करियर क्षमता को अनलॉक करें",
+//     welcomeMessage:
+//       "आपके लिए विशेष रूप से तैयार किए गए व्यक्तिगत इंटर्नशिप अवसरों की खोज के लिए बाईं ओर अपनी प्रोफ़ाइल भरें।",
+//   },
+// };
+
+// const mockRecommendAPI = async (
+//   profile: StudentProfile
+// ): Promise<Internship[]> => {
+//   await new Promise((resolve) => setTimeout(resolve, 2000));
+//   const mockInternships = [
+//     {
+//       id: "1",
+//       title: "Frontend Developer Intern",
+//       company: "TechCorp Solutions",
+//       location: "Delhi",
+//       score: 92,
+//       reason:
+//         "Excellent match for your React and JavaScript skills, aligning with your interest in the Technology sector.",
+//       sector: "Technology",
+//     },
+//     {
+//       id: "2",
+//       title: "Data Analyst Intern",
+//       company: "DataViz Inc",
+//       location: "Mumbai",
+//       score: 87,
+//       reason:
+//         "Your Python skills align well with our data projects in the fast-growing tech landscape.",
+//       sector: "Technology",
+//     },
+//     {
+//       id: "3",
+//       title: "Marketing Intern",
+//       company: "Creative Solutions",
+//       location: "Bangalore",
+//       score: 78,
+//       reason:
+//         "Great opportunity to apply your marketing knowledge in a leading creative agency.",
+//       sector: "Marketing",
+//     },
+//     {
+//       id: "4",
+//       title: "UI/UX Design Intern",
+//       company: "Design Studio Pro",
+//       location: "Remote",
+//       score: 85,
+//       reason:
+//         "Your design skills are exactly what we need for our upcoming mobile application.",
+//       sector: "Design",
+//     },
+//     {
+//       id: "5",
+//       title: "Financial Analyst Intern",
+//       company: "FinTech Innovations",
+//       location: "Gurgaon",
+//       score: 73,
+//       reason:
+//         "A solid match for your analytical and finance background in the booming FinTech sector.",
+//       sector: "Finance",
+//     },
+//   ];
+//   return mockInternships.sort((a, b) => b.score - a.score);
+// };
+
+// // --- Sub-components ---
+// const LoadingIndicator: React.FC<{ loadingText: string }> = ({
+//   loadingText,
+// }) => (
+//   <div className="flex flex-col items-center justify-center h-full text-center">
+//     <div className="flex justify-center items-center h-24">
+//       <div className="animate-bar-wave w-2.5 h-12 bg-primary mx-1.5 [animation-delay:-1.1s]"></div>
+//       <div className="animate-bar-wave w-2.5 h-12 bg-primary mx-1.5 [animation-delay:-1.0s]"></div>
+//       <div className="animate-bar-wave w-2.5 h-12 bg-primary mx-1.5 [animation-delay:-0.9s]"></div>
+//     </div>
+//     <p className="mt-4 text-sm font-medium text-muted-foreground">
+//       {loadingText}
+//     </p>
+//   </div>
+// );
+
+// const WelcomeMessage: React.FC<{ title: string; message: string }> = ({
+//   title,
+//   message,
+// }) => (
+//   <div className="flex flex-col items-center justify-center h-full text-center p-8">
+//     <motion.div
+//       initial={{ opacity: 0, y: 20 }}
+//       animate={{ opacity: 1, y: 0 }}
+//       transition={{ duration: 0.5 }}
+//     >
+//       <Star className="w-16 h-16 text-primary mb-4" />
+//       <h2 className="text-2xl font-bold mb-2">{title}</h2>
+//       <p className="max-w-md text-muted-foreground">{message}</p>
+//     </motion.div>
+//   </div>
+// );
+
+// // --- Main Dashboard Component ---
+// export function InternshipDashboard() {
+//   const [language, setLanguage] = useState<"en" | "hi">("en");
+//   const [profile, setProfile] = useState<StudentProfile>({
+//     skills: "",
+//     qualifications: "",
+//     locations: "",
+//     sectors: "",
+//   });
+//   const [internships, setInternships] = useState<Internship[]>([]);
+//   const [loading, setLoading] = useState(false);
+//   const [submitted, setSubmitted] = useState(false);
+//   const { toast } = useToast();
+
+//   const t = translations[language];
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     setSubmitted(true);
+//     try {
+//       const recommendations = await mockRecommendAPI(profile);
+//       setInternships(recommendations);
+//     } catch (error) {
+//       toast({
+//         title: "Error",
+//         description: "Failed to fetch recommendations. Please try again.",
+//         variant: "destructive",
+//       });
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="flex w-full min-h-screen font-sans">
+//       {/* Left Panel: Form */}
 //       <div className="hidden lg:block lg:w-1/3 xl:w-1/4 p-8 border-r border-border sticky top-0 h-screen overflow-y-auto">
 //         <div className="flex justify-between items-center mb-8">
 //           <h1 className="text-xl font-bold">{t.title}</h1>
